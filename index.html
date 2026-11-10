@@ -242,18 +242,6 @@ const CONFIG = {
 };
 
 const QUESTIONS = [
-  {p:"Fundo Thermo", q:"Quel niveau d’efficacité en récupération de chaleur atteint le Fundo Thermo ?", o:["25 %","50 %","75 %"], a:1, e:"Le Fundo Thermo atteint 50 % d’efficacité en récupération de chaleur."},
-  {p:"Fundo Thermo", q:"De quelle manière le Fundo Thermo fonctionne-t-il ?", o:["Avec une batterie","Sans électricité","Avec un moteur"], a:1, e:"Le Fundo Thermo fonctionne sans électricité."},
-  {p:"Fundo Thermo", q:"Que permet de faire l’échangeur de chaleur intégré ?", o:["Refroidir l’eau","Préchauffer l’eau","Filtrer l’eau"], a:1, e:"L’échangeur de chaleur intégré préchauffe l’eau."},
-  {p:"Cloison XS", q:"Quelle est la largeur de la cloison XS ?", o:["200 mm","300 mm","500 mm"], a:1, e:"La cloison XS mesure 300 mm de large."},
-  {p:"Cloison XS", q:"Qu’est-ce qui est intégré en usine dans la cloison XS ?", o:["Une évacuation","Les conduites d’eau","Un siphon"], a:1, e:"Les conduites d’eau sont intégrées en usine."},
-  {p:"Cloison XS", q:"Comment peut-on ajuster la hauteur de la cloison XS ?", o:["En la chauffant","En la pliant","En la recoupant"], a:2, e:"On ajuste la hauteur de la cloison XS en la recoupant."},
-  {p:"Vasque Flex", q:"Quelle est la capacité de charge maximale de la vasque Flex ?", o:["100 kg","150 kg","200 kg"], a:1, e:"La vasque Flex supporte jusqu’à 150 kg."},
-  {p:"Vasque Flex", q:"Comment se fixe la vasque Flex ?", o:["Avec des vis","Avec des consoles fixées au mur","Par collage"], a:1, e:"La vasque Flex se fixe avec des consoles fixées au mur."},
-  {p:"Vasque Flex", q:"Quel type de finition pour la vasque Flex ?", o:["Peinture","Carrelage","Parquet"], a:1, e:"La vasque Flex se finit en carrelage."},
-  {p:"Fundo Solido", q:"En combien de temps le Fundo Solido est-il prêt à recevoir le revêtement PVC ?", o:["24 heures","48 heures","1 semaine"], a:1, e:"Le Fundo Solido est prêt à recevoir le revêtement PVC en 48 heures."},
-  {p:"Fundo Solido", q:"Quel revêtement est compatible avec le Fundo Solido ?", o:["Carrelage","Parquet","Sol souple PVC"], a:2, e:"Le Fundo Solido est compatible avec le sol souple PVC."},
-  {p:"Fundo Solido", q:"Quel est le matériau utilisé pour le cœur du Fundo Solido ?", o:["Bois","Mousse PET (bouteilles recyclées)","Mousse de polystyrène expansé"], a:1, e:"Le cœur du Fundo Solido est en mousse PET issue de bouteilles recyclées."},
   {p:"Questions fréquentes", q:"Les panneaux wedi peuvent-ils remplacer une plaque de plâtre dans une salle de bains ?", o:["Non, ils se posent toujours par-dessus le plâtre","Oui, ils sont étanches dans la masse","Oui, mais uniquement hors zone de douche"], a:1, e:"Les panneaux wedi remplacent la plaque de plâtre : ils sont étanches dans toute leur épaisseur, même en zone de douche."},
   {p:"Questions fréquentes", q:"Quel produit wedi sert à coller les panneaux entre eux et à rendre les jonctions étanches ?", o:["La colle-mastic polymère wedi 610","Une mousse expansive","Un enduit de plâtre"], a:0, e:"La wedi 610 colle et étanchéifie à la fois : c’est le produit de référence pour assembler les panneaux."},
   {p:"Questions fréquentes", q:"Quel panneau wedi est conçu pour habiller le bâti-support d’un WC suspendu ?", o:["Le wedi Fundo","Le Top wall","Le wedi I-Board"], a:2, e:"Le wedi I-Board est déjà percé en usine pour les fixations du WC, l’évacuation et l’arrivée d’eau ; il ne reste qu’à positionner la commande de chasse d’eau."},
@@ -327,7 +315,7 @@ function screenStart(err){
       ${bar(["Testez vos","connaissances wedi ..."])}
       <div class="facts">
         <span class="fact"><b>${QUESTIONS.length}</b> questions</span>
-        <span class="fact"><b>${THEMES.length}</b> thèmes</span>
+        ${THEMES.length>1?`<span class="fact"><b>${THEMES.length}</b> thèmes</span>`:""}
         <span class="fact">À gagner : <b>${esc(CONFIG.LOT)}</b></span>
       </div>
     </div>
@@ -430,9 +418,9 @@ function nextStep(){
   const n = THEMES.indexOf(p), count = QUESTIONS.filter(q=>q.p===p).length;
   const t0 = Date.now(); state.paused = true;
   overlay(`
-    <p class="eyebrow">Thème ${n+1} / ${THEMES.length}</p>
+    ${THEMES.length>1?`<p class="eyebrow">Thème ${n+1} / ${THEMES.length}</p>`:`<p class="eyebrow">C’est parti !</p>`}
     <p class="big"><span>${dots(p)}</span></p>
-    ${squares(THEMES.length, n+1)}
+    ${THEMES.length>1?squares(THEMES.length, n+1):""}
     <p class="meta">${count} questions</p>`,
     CONFIG.DUREE_INTRO_MS,
     ()=>{ state.start += Date.now()-t0; state.paused = false; renderQuestion() });

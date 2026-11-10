@@ -21,7 +21,7 @@ const ADMIN_PIN = "changez-moi";
 
 // Index de la bonne réponse (0 = A, 1 = B, 2 = C) pour chaque question, par concours.
 const REPONSES = {
-  "aubade-2026-01": [1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1, 0, 2, 0, 1, 2]
+  "aubade-2026-01": [1, 0, 2, 0, 1, 2]
 };
 
 const HEADERS = ["Date", "Concours", "Code", "Prénom", "Nom", "Email", "Score", "Total", "Durée (s)", "Réponses"];
