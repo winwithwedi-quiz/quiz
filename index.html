@@ -253,7 +253,13 @@ const QUESTIONS = [
   {p:"Vasque Flex", q:"Quel type de finition pour la vasque Flex ?", o:["Peinture","Carrelage","Parquet"], a:1, e:"La vasque Flex se finit en carrelage."},
   {p:"Fundo Solido", q:"En combien de temps le Fundo Solido est-il prêt à recevoir le revêtement PVC ?", o:["24 heures","48 heures","1 semaine"], a:1, e:"Le Fundo Solido est prêt à recevoir le revêtement PVC en 48 heures."},
   {p:"Fundo Solido", q:"Quel revêtement est compatible avec le Fundo Solido ?", o:["Carrelage","Parquet","Sol souple PVC"], a:2, e:"Le Fundo Solido est compatible avec le sol souple PVC."},
-  {p:"Fundo Solido", q:"Quel est le matériau utilisé pour le cœur du Fundo Solido ?", o:["Bois","Mousse PET (bouteilles recyclées)","Mousse de polystyrène expansé"], a:1, e:"Le cœur du Fundo Solido est en mousse PET issue de bouteilles recyclées."}
+  {p:"Fundo Solido", q:"Quel est le matériau utilisé pour le cœur du Fundo Solido ?", o:["Bois","Mousse PET (bouteilles recyclées)","Mousse de polystyrène expansé"], a:1, e:"Le cœur du Fundo Solido est en mousse PET issue de bouteilles recyclées."},
+  {p:"Questions fréquentes", q:"Les panneaux wedi peuvent-ils remplacer une plaque de plâtre dans une salle de bains ?", o:["Non, ils se posent toujours par-dessus le plâtre","Oui, ils sont étanches dans la masse","Oui, mais uniquement hors zone de douche"], a:1, e:"Les panneaux wedi remplacent la plaque de plâtre : ils sont étanches dans toute leur épaisseur, même en zone de douche."},
+  {p:"Questions fréquentes", q:"Quel produit wedi sert à coller les panneaux entre eux et à rendre les jonctions étanches ?", o:["La colle-mastic polymère wedi 610","Une mousse expansive","Un enduit de plâtre"], a:0, e:"La wedi 610 colle et étanchéifie à la fois : c’est le produit de référence pour assembler les panneaux."},
+  {p:"Questions fréquentes", q:"Quel panneau wedi est conçu pour habiller le bâti-support d’un WC suspendu ?", o:["Le wedi Fundo","Le Top wall","Le wedi I-Board"], a:2, e:"Le wedi I-Board est déjà percé en usine pour les fixations du WC, l’évacuation et l’arrivée d’eau ; il ne reste qu’à positionner la commande de chasse d’eau."},
+  {p:"Questions fréquentes", q:"Peut-on découper un revêtement Top wall directement sur le chantier ?", o:["Oui, à la scie circulaire","Non, il est livré uniquement sur mesure","Non, seul wedi peut le découper en usine"], a:0, e:"Les revêtements Top se recoupent sur place à la scie circulaire avec un rail de découpe, et peuvent être percés à la scie cloche pour la robinetterie."},
+  {p:"Questions fréquentes", q:"Peut-on recouper un receveur wedi Fundo pour l’adapter à la douche ?", o:["Non, jamais","Oui, dans certaines limites","Oui, sans aucune limite"], a:1, e:"Les receveurs Fundo se recoupent dans des limites qui dépendent du modèle (position de l’écoulement ou du caniveau)."},
+  {p:"Questions fréquentes", q:"Un panneau wedi épais peut-il servir de muret de douche sans être fixé en partie haute ?", o:["Non, il doit toujours être fixé au plafond","Seulement avec une structure métallique","Oui, à partir de 50 mm d’épaisseur"], a:2, e:"À partir de 50 mm, le panneau wedi est autoportant : il suffit de le coller au sol et au mur avec la wedi 610."}
 ];
 
 /* =====================================================================
@@ -320,8 +326,8 @@ function screenStart(err){
     <div class="hero">
       ${bar(["Testez vos","connaissances wedi ..."])}
       <div class="facts">
-        <span class="fact"><b>12</b> questions</span>
-        <span class="fact"><b>4</b> produits</span>
+        <span class="fact"><b>${QUESTIONS.length}</b> questions</span>
+        <span class="fact"><b>${THEMES.length}</b> thèmes</span>
         <span class="fact">À gagner : <b>${esc(CONFIG.LOT)}</b></span>
       </div>
     </div>
