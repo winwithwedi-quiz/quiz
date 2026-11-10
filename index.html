@@ -62,8 +62,9 @@ form{display:grid;gap:14px}
 label.f{display:grid;gap:4px;font-weight:700;font-size:.9rem}
 /* Écran d'accueil (maquette Figma) : champ et bouton sur toute la largeur du bloc */
 .start-form{gap:16px}
-.start-field{display:grid;gap:8px}
-.start-field label{font-weight:700;font-size:.95rem;color:var(--grey)}
+.start-field{display:grid;gap:14px}
+.start-field label{display:grid;gap:2px;font-weight:700;font-size:.95rem;color:var(--grey)}
+.start-field .label-sub{font-weight:400;font-size:.88rem}
 .start-field input[type=email]{height:56px;font-size:1rem;padding:0 16px;border:1px solid var(--line);font-weight:300}
 .start-field input[type=email]::placeholder{color:#9A9A99}
 .field-help{margin:0;font-size:.72rem;font-weight:300;color:var(--grey)}
@@ -322,9 +323,9 @@ function screenStart(err){
     <div class="panel">
       <form id="startForm" class="start-form" novalidate>
         <div class="start-field">
-          <label for="email">Pour jouer saisissez votre identifiant</label>
-          <input type="email" id="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="prenom.nom@exemple.fr" aria-describedby="emailHelp" required>
-          <p class="field-help" id="emailHelp">Votre adresse mail est votre identifiant du programme fidélité win with wedi</p>
+          <label for="email">Pour jouer saisissez votre identifiant du programme
+            <span class="label-sub">(il s’agit de l’adresse e-mail que vous avez utilisée pour vous inscrire)</span></label>
+          <input type="email" id="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="prenom.nom@exemple.fr" required>
         </div>
         <label class="check" for="rgpd"><input type="checkbox" id="rgpd">
           <span>J’accepte que wedi enregistre mon adresse e-mail et mon score pour organiser ce concours et contacter les gagnants. Ces données ne sont pas utilisées à d’autres fins.</span></label>
