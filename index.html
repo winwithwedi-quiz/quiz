@@ -419,8 +419,8 @@ function nextStep(){
   const n = THEMES.indexOf(p), count = QUESTIONS.filter(q=>q.p===p).length;
   const t0 = Date.now(); state.paused = true;
   overlay(`
-    ${THEMES.length>1?`<p class="eyebrow">Thème ${n+1} / ${THEMES.length}</p>`:`<p class="eyebrow">C’est parti !</p>`}
-    <p class="big"><span>${dots(p)}</span></p>
+    ${THEMES.length>1?`<p class="eyebrow">Thème ${n+1} / ${THEMES.length}</p>`:""}
+    <p class="big"><span>${THEMES.length>1?dots(p):"C’est parti !"}</span></p>
     ${THEMES.length>1?squares(THEMES.length, n+1):""}
     <p class="meta">${count} questions</p>`,
     CONFIG.DUREE_INTRO_MS,
