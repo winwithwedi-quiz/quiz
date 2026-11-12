@@ -610,7 +610,7 @@ function screenAdmin(note){
   const modes = [["day","Jour"],["week","Semaine"],["month","Mois"],["all","Tout"],["custom","Dates"]];
   show(`
     ${bar(["Résultats","du concours ..."])}
-    <p><strong>${esc(CONFIG.CONCOURS_TITRE)}</strong> · ${esc(CONFIG.CONCOURS_ID)} · ${adminRows.length} participation${adminRows.length>1?"s":""} au total</p>
+    <p><strong>${esc(CONFIG.CONCOURS_TITRE)}</strong> · ${adminRows.length} participation${adminRows.length>1?"s":""} au total</p>
     ${CONFIG.ENDPOINT?"":`<div class="msg info">Version test : seules les participations jouées sur cet appareil apparaissent. Pour réunir les participants de tous les appareils, connectez la feuille Google (CONFIG.ENDPOINT).</div>`}
     ${note?`<div class="msg info" role="status" style="margin-top:10px">${esc(note)}</div>`:""}
     <div class="panel">
