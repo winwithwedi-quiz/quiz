@@ -335,8 +335,7 @@ function screenStart(err){
         ${err?`<div class="msg err" role="alert">${esc(err)}</div>`:""}
         <button class="btn btn-start" type="submit" id="goBtn">Commencer le quiz</button>
         <div class="start-note">
-          <p>Si vous avez besoin de réviser vos connaissances sur la gamme wedi avant de démarrer, nous sommes là pour vous aider : il vous suffit de cliquer sur le lien suivant :</p>
-          <a href="${esc(CONFIG.LIEN_REVISION)}" target="_blank" rel="noopener">Réviser avec la FAQ wedi</a>
+          <a href="${esc(CONFIG.LIEN_REVISION)}" target="_blank" rel="noopener">Un petit coup de main; révisez avec la FAQ wedi avant de commencer</a>
           <a href="${esc(CONFIG.LIEN_REGLEMENT)}" target="_blank" rel="noopener">Cliquez ici pour lire le règlement du concours :</a>
         </div>
       </form>
