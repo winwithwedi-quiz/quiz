@@ -233,6 +233,7 @@ const CONFIG = {
   CONCOURS_ID: "aubade-2026-01",          // change à chaque concours : 1 participation par adresse e-mail et par concours
   CONCOURS_TITRE: "win with wedi Quiz 2026",
   LOT: "des goodies wedi",
+  LIEN_REVISION: "https://www.solutions-wedi.fr/faq", // lien pour réviser avant de jouer (s'ouvre dans un nouvel onglet)
   LIEN_REGLEMENT: "#",                    // URL de la page du règlement (s'ouvre dans un nouvel onglet)
   // URL du script Google (voir apps-script.gs). Vide = version test : données gardées sur l'appareil.
   ENDPOINT: "https://script.google.com/macros/s/AKfycbwasGVy3WT8qtCBxKpfkElMWkfuHBjRF9TR84hUWqY5rBhdBVQmoRzAi_EY6e3oMsVE_Q/exec",
@@ -335,6 +336,7 @@ function screenStart(err){
         <button class="btn btn-start" type="submit" id="goBtn">Commencer le quiz</button>
         <div class="start-note">
           <p>Si vous avez besoin de réviser vos connaissances sur la gamme wedi avant de démarrer, nous sommes là pour vous aider : il vous suffit de cliquer sur le lien suivant :</p>
+          <a href="${esc(CONFIG.LIEN_REVISION)}" target="_blank" rel="noopener">Réviser avec la FAQ wedi</a>
           <a href="${esc(CONFIG.LIEN_REGLEMENT)}" target="_blank" rel="noopener">Cliquez ici pour lire le règlement du concours :</a>
         </div>
       </form>
