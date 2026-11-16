@@ -330,7 +330,7 @@ function screenStart(err){
         </div>
         <label class="check" for="rgpd" hidden><input type="checkbox" id="rgpd"hidden>
           <span hidden>J’accepte que wedi enregistre mon adresse e-mail et mon score pour organiser ce concours et contacter les gagnants. Ces données ne sont pas utilisées à d’autres fins.</span></label>
-        <label class="check" for="reglement"><input type="checkbox" id="reglement">
+        <label class="check" for="reglement"><input type="checkbox" id="reglement" checked>
           <span>J’accepte le règlement du concours (une seule participation par identifiant du programme de fidélité)</span></label>
         ${err?`<div class="msg err" role="alert">${esc(err)}</div>`:""}
         <button class="btn btn-start" type="submit" id="goBtn">Commencer le quiz</button>
