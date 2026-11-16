@@ -349,7 +349,9 @@ async function onStart(ev){
   const v = id => document.getElementById(id).value.trim();
   player = {email:v("email").toLowerCase(), prenom:"", nom:"", code:""};
   if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(player.email)) return screenStart("Indiquez une adresse e-mail valide.");
-  if(!document.getElementById("rgpd").checked||!document.getElementById("reglement").checked) return screenStart("Cochez les deux cases pour participer.");
+  // Toutes les cases visibles doivent être cochées (une case masquée avec « hidden » est ignorée).
+  const cases = [...document.querySelectorAll('#startForm label.check:not([hidden]) input[type=checkbox]')];
+  if(cases.some(c=>!c.checked)) return screenStart(cases.length>1 ? "Cochez les cases pour participer." : "Cochez la case pour participer.");
   const btn = document.getElementById("goBtn"); btn.disabled = true; btn.textContent = "Vérification ...";
   try{
     const r = await Store.checkMember(player.email);
