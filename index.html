@@ -75,6 +75,10 @@ label.f{display:grid;gap:4px;font-weight:700;font-size:.9rem}
 .start-note p{margin:0}
 .start-note a{font-size:.82rem;font-weight:700;color:var(--blue);text-decoration:none}
 .start-note a:hover{text-decoration:underline}
+.start-note .guides-title{font-size:.82rem;font-weight:700;color:var(--blue)}
+.start-note .guides{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.start-note .guides li{display:flex;align-items:center;gap:10px}
+.start-note .guides li::before{content:"";width:7px;height:7px;background:var(--blue);flex:none}
 input[type=text],input[type=email],input[type=password]{font:inherit;font-weight:400;padding:12px;border:2px solid var(--line);background:var(--white);color:var(--grey);border-radius:0;width:100%}
 input:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 .check{display:flex;gap:10px;align-items:flex-start;font-size:.88rem}
@@ -232,8 +236,9 @@ tr.win td{font-weight:700;background:#E5F5FC}
 const CONFIG = {
   CONCOURS_ID: "aubade-2026-01",          // change à chaque concours : 1 participation par adresse e-mail et par concours
   CONCOURS_TITRE: "win with wedi Quiz 2026",
-  LOT: "1 doudoune sans manche wedi",
-  LIEN_REVISION: "https://www.solutions-wedi.fr/faq", // lien pour réviser avant de jouer (s'ouvre dans un nouvel onglet)
+  LOT: "5 doudounes sans manche wedi",
+  LIEN_GUIDE_PANNEAUX: "#",               // PDF du guide de choix Panneaux wedi (s'ouvre dans un nouvel onglet)
+  LIEN_GUIDE_RECEVEURS: "#",              // PDF du guide de choix Receveurs wedi (s'ouvre dans un nouvel onglet)
   LIEN_REGLEMENT: "#",                    // URL de la page du règlement (s'ouvre dans un nouvel onglet)
   // URL du script Google (voir apps-script.gs). Vide = version test : données gardées sur l'appareil.
   ENDPOINT: "https://script.google.com/macros/s/AKfycbwasGVy3WT8qtCBxKpfkElMWkfuHBjRF9TR84hUWqY5rBhdBVQmoRzAi_EY6e3oMsVE_Q/exec",
@@ -247,8 +252,8 @@ const QUESTIONS = [
   {p:"Panneaux", q:"Quelle est la résistance à la compression des panneaux wedi ?", o:["2,5 t/m²","25 t/m²","250 t/m²"], a:1, e:"Les panneaux wedi résistent à 25 t/m² (0,25 N/mm² selon la norme EN 826) : ils peuvent donc aussi être posés au sol et carrelés directement."},
   {p:"Panneaux", q:"Comment règle-t-on la hauteur du tablier (habillage) de baignoire wedi ?", o:["Avec des cales en bois","Avec de la mousse expansive","Grâce à ses vérins de réglage intégrés"], a:2, e:"Le tablier de baignoire wedi se règle en hauteur grâce à ses vérins intégrés ; il se colle avec la wedi 610 et une bande d’armature, puis se carrelle."},
   {p:"Panneaux", q:"Quelle épaisseur minimale faut-il pour créer une cloison autoportante avec des panneaux wedi ?", o:["50 mm","30 mm","20 mm"], a:0, e:"À partir de 50 mm, les panneaux wedi sont autoportants et permettent de créer des cloisons de douche sans reprise en partie haute."},
-  {p:"Receveurs", q:"Quels sont les receveurs wedi Fundo validés par Socotec ?", o:["Fundo Primo, Fundo Riolito Neo et Fundo Plano","Fundo Primo, Fundo Ligno Plus et Fundo Plano","Fundo Flex, Fundo Ligno Plus et Fundo Primo"], a:1, e:"L’enquête technique Socotec (ETN n° ANC 24-071) valide trois receveurs : Fundo Primo, Fundo Ligno Plus et Fundo Plano. Les Fundo Riolito Neo et Fundo Flex n’en font pas partie."},
-  {p:"Receveurs", q:"Quel est le principal avantage du nouvel écoulement Fundo Wave ?", o:["Il favorise un effet autonettoyant","Il ne nécessite aucune pente","Il est entièrement en inox"], a:0, e:"Grâce à son contour intérieur sans reliefs, l’écoulement Fundo Wave est pratiquement autonettoyant, ce qui facilite l’hygiène et l’entretien."},
+  {p:"Receveurs", q:"Quels receveurs wedi bénéficient d’une ETN Socotec validée pour la pose sur supports bois neufs ?", o:["Fundo Primo, Fundo Riolito Neo et Fundo Plano","Fundo Primo, Fundo Ligno Plus et Fundo Plano","Fundo Flex, Fundo Ligno Plus et Fundo Primo"], a:1, e:"L’Enquête de Technique Nouvelle Socotec (ETN n° ANC 24-071) valide trois receveurs : Fundo Primo, Fundo Ligno Plus et Fundo Plano pour la pose sur supports bois neufs."},
+  {p:"Receveurs", q:"Quel est le principal avantage du nouvel écoulement Fundo Wave ?", o:["Son design permet un effet autonettoyant","Il ne nécessite aucune pente","Il est entièrement en inox"], a:0, e:"Le design du wedi Fundo Wave favorise un effet autonettoyant : la baisse de pression (dépression) générée au niveau du rétrécissement crée une aspiration puissante."},
   {p:"Receveurs", q:"Quelle est l’épaisseur totale du receveur wedi Fundo Plano, écoulement intégré compris ?", o:["40 mm","100 mm","65 mm"], a:2, e:"Le Fundo Plano mesure 65 mm d’épaisseur tout compris, avec son écoulement horizontal intégré, ce qui le rend idéal pour les salles de bains de plain-pied."}
 ];
 
@@ -335,7 +340,11 @@ function screenStart(err){
         ${err?`<div class="msg err" role="alert">${esc(err)}</div>`:""}
         <button class="btn btn-start" type="submit" id="goBtn">Commencer le quiz</button>
         <div class="start-note">
-          <a href="${esc(CONFIG.LIEN_REVISION)}" target="_blank" rel="noopener">Un petit coup de main; révisez avec la FAQ wedi avant de commencer</a>
+          <p class="guides-title">Un petit coup de main, révisez avec les guides de choix :</p>
+          <ul class="guides">
+            <li><a href="${esc(CONFIG.LIEN_GUIDE_PANNEAUX)}" target="_blank" rel="noopener">Panneaux wedi</a></li>
+            <li><a href="${esc(CONFIG.LIEN_GUIDE_RECEVEURS)}" target="_blank" rel="noopener">Receveurs wedi</a></li>
+          </ul>
           <a href="${esc(CONFIG.LIEN_REGLEMENT)}" target="_blank" rel="noopener">Cliquez ici pour lire le règlement du concours </a>
         </div>
       </form>
