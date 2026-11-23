@@ -50,7 +50,16 @@ b,strong{font-weight:700}
 
 /* ---- Panneaux ---- */
 .panel{background:var(--grey-soft);padding:22px;margin-top:22px}
-.hero{background:var(--grey-soft);padding:28px 22px 22px}
+.hero{background:var(--grey-soft);padding:28px 22px 22px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;align-items:center}
+.hero-text{min-width:0;padding-right:22px}
+/* Photo du lot : cadre blanc, séparée du texte par un trait vertical */
+.hero-prize{margin:0;min-width:0;padding-left:22px;border-left:2px solid var(--blue);align-self:stretch;display:flex;align-items:center}
+.hero-prize img{display:block;width:100%;height:auto;background:var(--white);padding:8px;border:1px solid var(--line)}
+@media (max-width:640px){
+  .hero{grid-template-columns:1fr}
+  .hero-text{padding-right:0}
+  .hero-prize{border-left:0;border-top:2px solid var(--blue);padding-left:0;padding-top:20px;margin-top:20px}
+}
 .facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
 .fact{background:var(--white);padding:10px 14px;font-weight:700;color:var(--grey)}
 .fact b{color:var(--blue-ink);font-weight:900}
@@ -237,6 +246,7 @@ const CONFIG = {
   CONCOURS_ID: "aubade-2026-01",          // change à chaque concours : 1 participation par adresse e-mail et par concours
   CONCOURS_TITRE: "win with wedi Quiz 2026",
   LOT: "5 doudounes sans manche wedi",
+  IMAGE_LOT: "doudoune-wedi.jpg",         // photo du lot affichée à droite du titre (fichier dans le dépôt)
   LIEN_GUIDE_PANNEAUX: "https://www.solutions-wedi.fr/media/file/0296b046-guide-de-choix-panneaux-2026.pdf",               // PDF du guide de choix Panneaux wedi (s'ouvre dans un nouvel onglet)
   LIEN_GUIDE_RECEVEURS: "https://www.solutions-wedi.fr/media/file/c5a866ed-guide-de-choix-receveurs-2026.pdf",              // PDF du guide de choix Receveurs wedi (s'ouvre dans un nouvel onglet)
   LIEN_REGLEMENT: "#",                    // URL de la page du règlement (s'ouvre dans un nouvel onglet)
@@ -319,12 +329,16 @@ let player = null, state = null, timerId = null;
 function screenStart(err){
   show(`
     <div class="hero">
-      ${bar(["Testez vos","connaissances wedi ..."])}
-      <div class="facts">
-        <span class="fact"><b>${QUESTIONS.length}</b> questions</span>
-        
-        <span class="fact">À gagner : <b>${esc(CONFIG.LOT)}</b></span>
+      <div class="hero-text">
+        ${bar(["Testez vos","connaissances wedi ..."])}
+        <div class="facts">
+          <span class="fact"><b>${QUESTIONS.length}</b> questions</span>
+          <span class="fact">À gagner : <b>${esc(CONFIG.LOT)}</b></span>
+        </div>
       </div>
+      <figure class="hero-prize">
+        <img src="${esc(CONFIG.IMAGE_LOT)}" alt="Doudoune sans manche wedi, vue de face et de trois quarts" width="1200" height="743" onerror="this.closest('figure').hidden=true">
+      </figure>
     </div>
     <div class="panel">
       <form id="startForm" class="start-form" novalidate>
