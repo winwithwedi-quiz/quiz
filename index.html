@@ -55,11 +55,11 @@ b,strong{font-weight:700}
 .hero .facts{grid-area:facts;flex-direction:column;align-items:flex-start;align-self:start;margin-top:0;min-width:0}
 .hero .fact{max-width:320px}
 /* Photo du lot : cadre bleu wedi, en bas à droite */
-.hero-prize{grid-area:prize;margin:0;align-self:start;width:clamp(200px,32vw,250px)}
-.hero-prize img{display:block;width:100%;height:auto;background:var(--white);padding:6px;border:3px solid var(--blue)}
+.hero-prize{grid-area:prize;margin:0;align-self:start}
+.hero-prize img{display:block;width:auto;height:150px;max-width:100%;aspect-ratio:auto;object-fit:contain;background:var(--white);padding:6px;border:3px solid var(--blue);box-sizing:border-box}
 @media (max-width:560px){
   .hero{grid-template-columns:1fr;grid-template-areas:"title" "facts" "prize"}
-  .hero-prize{width:100%}
+  .hero-prize img{width:100%;height:auto}
 }
 
 .facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
@@ -328,6 +328,21 @@ document.getElementById("modeTag").hidden = !!CONFIG.ENDPOINT;
    ===================================================================== */
 let player = null, state = null, timerId = null;
 
+/* Accueil : la photo du lot prend exactement la hauteur du bloc d'infos à sa gauche. */
+let prizeObserver = null;
+function alignPrizeHeight(){
+  const facts = document.querySelector(".hero .facts"), img = document.querySelector(".hero-prize img");
+  if(prizeObserver){ prizeObserver.disconnect(); prizeObserver = null }
+  if(!facts || !img) return;
+  const fit = () => {
+    const side = getComputedStyle(document.querySelector(".hero")).gridTemplateAreas.includes("prize\"") && !getComputedStyle(document.querySelector(".hero")).gridTemplateAreas.includes("\"prize\"");
+    img.style.height = side ? facts.getBoundingClientRect().height + "px" : "";
+  };
+  fit();
+  if(window.ResizeObserver){ prizeObserver = new ResizeObserver(fit); prizeObserver.observe(facts) }
+  else window.addEventListener("resize", fit);
+}
+
 function screenStart(err){
   show(`
     <div class="hero">
@@ -365,6 +380,7 @@ function screenStart(err){
     </div>`);
   if(player) document.getElementById("email").value = player.email||"";
   document.getElementById("startForm").addEventListener("submit", onStart);
+  alignPrizeHeight();
 }
 
 async function onStart(ev){
