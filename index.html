@@ -50,16 +50,18 @@ b,strong{font-weight:700}
 
 /* ---- Panneaux ---- */
 .panel{background:var(--grey-soft);padding:22px;margin-top:22px}
-.hero{background:var(--grey-soft);padding:28px 22px 22px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;align-items:center}
-.hero-text{min-width:0;padding-right:22px}
-/* Photo du lot : cadre blanc, séparée du texte par un trait vertical */
-.hero-prize{margin:0;min-width:0;padding-left:22px;border-left:2px solid var(--blue);align-self:stretch;display:flex;align-items:center}
-.hero-prize img{display:block;width:100%;height:auto;background:var(--white);padding:8px;border:1px solid var(--line)}
-@media (max-width:640px){
-  .hero{grid-template-columns:1fr}
-  .hero-text{padding-right:0}
-  .hero-prize{border-left:0;border-top:2px solid var(--blue);padding-left:0;padding-top:20px;margin-top:20px}
+.hero{background:var(--grey-soft);padding:28px 22px 22px;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"title title" "facts prize";column-gap:22px;row-gap:20px;align-items:end}
+.hero-title{grid-area:title;min-width:0}
+.hero .facts{grid-area:facts;flex-direction:column;align-items:flex-start;align-self:start;margin-top:0;min-width:0}
+.hero .fact{max-width:320px}
+/* Photo du lot : cadre bleu wedi, en bas à droite */
+.hero-prize{grid-area:prize;margin:0;align-self:start;width:clamp(200px,32vw,250px)}
+.hero-prize img{display:block;width:100%;height:auto;background:var(--white);padding:6px;border:3px solid var(--blue)}
+@media (max-width:560px){
+  .hero{grid-template-columns:1fr;grid-template-areas:"title" "facts" "prize"}
+  .hero-prize{width:100%}
 }
+
 .facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
 .fact{background:var(--white);padding:10px 14px;font-weight:700;color:var(--grey)}
 .fact b{color:var(--blue-ink);font-weight:900}
@@ -329,12 +331,10 @@ let player = null, state = null, timerId = null;
 function screenStart(err){
   show(`
     <div class="hero">
-      <div class="hero-text">
-        ${bar(["Testez vos","connaissances wedi ..."])}
-        <div class="facts">
-          <span class="fact"><b>${QUESTIONS.length}</b> questions</span>
-          <span class="fact">À gagner : <b>${esc(CONFIG.LOT)}</b></span>
-        </div>
+      <div class="hero-title">${bar(["Testez vos","connaissances wedi ..."])}</div>
+      <div class="facts">
+        <span class="fact"><b>${QUESTIONS.length}</b> questions</span>
+        <span class="fact">À gagner : <b>${esc(CONFIG.LOT)}</b></span>
       </div>
       <figure class="hero-prize">
         <img src="${esc(CONFIG.IMAGE_LOT)}" alt="Doudoune sans manche wedi, vue de face et de trois quarts" width="1200" height="743" onerror="this.closest('figure').hidden=true">
